@@ -1,0 +1,102 @@
+include "target_unity.tmh"
+
+//program startup
+int main()
+{
+  printf("FreeProcInstance(0) returns ", FreeProcInstance(0), "\xa");
+
+  Excludes(); // set which devices this script configures (only T16000 and T16000L)
+  
+  if(Init(&EventHandle)) return 1;
+
+  SetAxesAirplane(); // X = roll, Zrot = yaw
+ 
+  MapKey(&T16000, B14, EXEC("SetAxesAirplane();")); 
+  MapKey(&T16000, B15, EXEC("SetAxesRocket();")); 
+  // MapKey(&T16000, B16, EXEC("SetAxesDocking();")); // not needed
+
+  SetKBRate(32, 50); // SetKBRate( PULSE key-down duration, D() default delay )
+  SetKBLayout(KB_ENG);
+}
+
+//event handler
+int EventHandle(int type, alias o, int x)
+{
+  DefaultMapping(&o, x);
+  
+  //add event handling code here
+}
+
+// Writes axes mode message to a file that is read and displayed in KSP in flight scenes.
+int SaveAxesMessage(alias message)
+{
+  printf(&message); // show in script editor output
+
+  int file = fopen("C:\\Program Files\\KerbalSpaceProgram\\GameData\\AxisModeMessage\\axismode.txt", "w");
+  if (file == 0) {
+    printf("Message file opening failed\xa");
+    return 0;
+  }
+
+  fwrite(&message, 
+         1,                 // int size of a char
+         strlen(&message),  // int char count
+         file);
+
+  fclose(file);
+
+  return 1;
+}
+
+int SetAxesAirplane() // right joy: X = roll, Zrot = yaw
+{
+  SaveAxesMessage("Axes set to airplane mode\xa");
+  MapAxis(&T16000,  JOYX,   DX_X_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000,  JOYY,   DX_Y_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000,  RUDDER, DX_Z_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000,  THR,    DX_SLIDER_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, JOYX,   DX_XROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, JOYY,   DX_YROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, RUDDER, DX_ZROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, THR,    DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+}
+
+int SetAxesRocket() // right joy: X = yaw, Zrot = roll
+{
+  SaveAxesMessage("Axes set to rocket mode\xa");
+  MapAxis(&T16000,  JOYX,   DX_Z_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000,  JOYY,   DX_Y_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000,  RUDDER, DX_X_AXIS, AXIS_REVERSED, MAP_ABSOLUTE); // reversal
+  MapAxis(&T16000,  THR,    DX_SLIDER_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, JOYX,   DX_XROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, JOYY,   DX_YROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, RUDDER, DX_ZROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, THR,    DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+}
+
+// not needed; airplane and rocket modes both make translation available on the L stick
+int SetAxesDocking() // left joy = rotation (rocket), right joy = translation
+{
+  printf("Axes set to docking mode\xa");
+  MapAxis(&T16000,  JOYX,   DX_XROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000,  JOYY,   DX_YROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000,  RUDDER, DX_ZROT_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000,  THR,    DX_SLIDER_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, JOYX,   DX_Z_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, JOYY,   DX_Y_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, RUDDER, DX_X_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+  MapAxis(&T16000L, THR,    DX_THROTTLE_AXIS, AXIS_NORMAL, MAP_ABSOLUTE);
+}
+
+int Excludes()
+{ // leaves only T16000 and T16000L
+  Configure(&HCougar, MODE_EXCLUDED);
+  Configure(&Joystick, MODE_EXCLUDED);
+  Configure(&JoystickF18, MODE_EXCLUDED);
+  Configure(&Throttle, MODE_EXCLUDED);
+  Configure(&LMFD, MODE_EXCLUDED);
+  Configure(&RMFD, MODE_EXCLUDED);
+  Configure(&TFRPRudder, MODE_EXCLUDED);
+  Configure(&TWCSThrottle, MODE_EXCLUDED);
+  Configure(&TFRPHARudder, MODE_EXCLUDED);
+}
