@@ -22,7 +22,7 @@ driver created by TARGET.
 
 NOTE: In my experience, KSP is not compatible with TARGET out of the box. There are steps that you can take to correct this, however. See https://forum.kerbalspaceprogram.com/index.php?/topic/187297-i-got-thrustmaster-target-t16000m-to-work-with-ksp/.
 
-Once this is done, download the two files in the "binaries" direcctory. Put the .tmc file wherever your TARGET scripts normally go, e.g. C:\Program Files (x86)\Thrustmaster\TARGET\scripts. Put the .dll into a new folder inside the GameData folder in your KSP install directory.
+Once this is done, download the two files in the "binaries" directory. Put the .tmc file wherever your TARGET scripts normally go, e.g. C:\Program Files (x86)\Thrustmaster\TARGET\scripts. Put the .dll into a new folder inside the GameData folder in your KSP install directory.
 
 ## Justification
 
