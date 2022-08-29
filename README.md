@@ -20,11 +20,11 @@ driver created by TARGET.
 
 ## Instructions
 
-NOTE: In my experience, KSP is not compatible with TARGET out of the box. There are steps that you can take to correct this, however. See https://forum.kerbalspaceprogram.com/index.php?/topic/187297-i-got-thrustmaster-target-t16000m-to-work-with-ksp/.
+Download the two files in the "binaries" directory. Put the .tmc file wherever your TARGET scripts normally go, e.g. C:\Program Files (x86)\Thrustmaster\TARGET\scripts. Put the .dll into a new folder inside the GameData folder in your KSP install directory.
 
-Once this is done, download the two files in the "binaries" directory. Put the .tmc file wherever your TARGET scripts normally go, e.g. C:\Program Files (x86)\Thrustmaster\TARGET\scripts. Put the .dll into a new folder inside the GameData folder in your KSP install directory.
+NOTE: In my experience, KSP is not compatible with TARGET out of the box. There are steps that you can take to correct this, however, which require modifying the .tmc file you installed above. See https://forum.kerbalspaceprogram.com/index.php?/topic/187297-i-got-thrustmaster-target-t16000m-to-work-with-ksp/.
 
-You'll probably need to adjust the .tmc script to fit your installation. Change the line
+You'll probably need to make further adjustments to the .tmc script to fit your installation. Change the line
 `int file = fopen("C:\\Program Files\\KerbalSpaceProgram\\GameData\\AxisModeMessage\\axismode.txt", "w");`
 to match your KSP installation. (It wouldn't hurt to create the text file it mentions too.) You'll also
 have to change the `Excludes()` function to permit use of your particular joystick model, if you don't own a T.16000M.
