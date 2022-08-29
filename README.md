@@ -24,6 +24,11 @@ NOTE: In my experience, KSP is not compatible with TARGET out of the box. There 
 
 Once this is done, download the two files in the "binaries" directory. Put the .tmc file wherever your TARGET scripts normally go, e.g. C:\Program Files (x86)\Thrustmaster\TARGET\scripts. Put the .dll into a new folder inside the GameData folder in your KSP install directory.
 
+You'll probably need to adjust the .tmc script to fit your installation. Change the line
+`int file = fopen("C:\\Program Files\\KerbalSpaceProgram\\GameData\\AxisModeMessage\\axismode.txt", "w");`
+to match your KSP installation. (It wouldn't hurt to create the text file it mentions too.) You'll also
+have to change the `Excludes()` function to permit use of your particular joystick model, if you don't own a T.16000M.
+
 ## Justification
 
 In short, players often want to use joystick x to control a rocket's yaw instead of roll, as with a plane.
