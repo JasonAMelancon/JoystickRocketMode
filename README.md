@@ -18,6 +18,12 @@ TARGET is a powerful scripting system that can modify input from supported Thrus
 including changing which axes of a supported joystick control a particular axis of the virtual joystick 
 driver created by TARGET. 
 
+## Instructions
+
+NOTE: In my experience, KSP is not compatible with TARGET out of the box. There are steps that you can take to correct this, however. See https://forum.kerbalspaceprogram.com/index.php?/topic/187297-i-got-thrustmaster-target-t16000m-to-work-with-ksp/.
+
+Once this is done, download the two files in the "binaries" direcctory. Put the .tmc file wherever your TARGET scripts normally go, e.g. C:\Program Files (x86)\Thrustmaster\TARGET\scripts. Put the .dll into a new folder inside the GameData folder in your KSP install directory.
+
 ## Justification
 
 In short, players often want to use joystick x to control a rocket's yaw instead of roll, as with a plane.
